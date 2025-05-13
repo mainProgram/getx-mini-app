@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/home_screen.dart';
+import 'package:getx/view/screens/home_screen.dart';
 
 
 class ThirdScreen extends StatelessWidget {

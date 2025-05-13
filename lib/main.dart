@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/first_screen.dart';
-import 'package:getx/home_screen.dart';
-import 'package:getx/second_screen.dart';
-import 'package:getx/third_screen.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:getx/home_binding.dart';
+import 'package:getx/view/screens/first_screen.dart';
+import 'package:getx/view/screens/home_screen.dart';
+import 'package:getx/view/screens/second_screen.dart';
+import 'package:getx/view/screens/third_screen.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
+  await GetStorage.init();
 }
 
 class MyApp extends StatelessWidget {
@@ -26,6 +29,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/second", page: () => const SecondScreen(), transition: Transition.zoom),
         GetPage(name: "/third", page: () => const ThirdScreen(), transition: Transition.fadeIn),
       ],
+      initialBinding: HomeBinding(),
       // home: const HomeScreen(),
     );
   }

@@ -1,11 +1,9 @@
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
-import 'package:get_storage/get_storage.dart';
 
-class HomeController extends GetxController {
+class SecondController extends GetxController {
   String name = "";
   RxInt count = 0.obs;
-  final GetStorage _box = GetStorage();
 
   void increment() {
     count.value++ ;
@@ -13,19 +11,6 @@ class HomeController extends GetxController {
 
   void displayName() {
     name = "Jane";
-    _box.write("name", name);
-    update();
-  }
-
-  void getSavedName() {
-    String? name = _box.read("name");
-    print(name);
-    update();
-  }
-
-  void deleteSavedName() {
-    _box.remove("name");
-    print("Saved name deleted");
     update();
   }
 
@@ -49,7 +34,6 @@ class HomeController extends GetxController {
     print("close");
     super.onClose();
   }
-
   // void displayName(String name) {
   //   this.name = name;
   // }
