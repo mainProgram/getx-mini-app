@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:getx/model/newsapi_model.dart';
+import 'package:getx/service/news_service.dart';
 
 class HomeController extends GetxController {
   String name = "";
@@ -31,9 +32,17 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    getNews();
     //When u open the page
     print("onInit");
     super.onInit();
+  }
+
+  NewsApi? newsApi;
+  getNews() async{
+    newsApi = await NewsService().getNewsData();
+    update();
+    print("The data = $newsApi");
   }
 
   @override

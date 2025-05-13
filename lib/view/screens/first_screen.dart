@@ -7,50 +7,69 @@ class FirstScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeController controller = Get.find();
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Name'),
+          title: const Text('News'),
           centerTitle: true,
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            GetBuilder<HomeController>( builder: (controller) {
-              return Column(
-                children: [
-                  Text(
-                      controller.name,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      textAlign: TextAlign.center
+        body: GetBuilder<HomeController>(
+          builder: (controller) {
+
+            if (controller.newsApi == null || controller.newsApi?.articles == null) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return ListView.builder(
+              itemCount: controller.newsApi!.articles.length,
+              itemBuilder: (context, index) => SizedBox(
+                height: 200,
+                child: Card(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Image(
+                          image: NetworkImage(
+                            controller.newsApi!.articles[index].urlToImage.toString(),
+                          ),
+                          fit: BoxFit.contain,
+                          width: 50,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 16.0,),
+                              Text(
+                                controller.newsApi!.articles[index].author.toString(),
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                              const SizedBox(height: 16.0,),
+                              Text(
+                                controller.newsApi!.articles[index].title.toString(),
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              const SizedBox(height: 16.0,),
+                              Text(
+                                controller.newsApi!.articles[index].description.toString(),
+                                style: Theme.of(context).textTheme.bodySmall,
+                                maxLines: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              );
-            }),
-            ElevatedButton(
-              child: const Text('Set name') ,
-              onPressed: () {
-                controller.displayName();
-                // Get.to(() => const FirstScreen(), transition: Transition.leftToRight);
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Display name') ,
-              onPressed: () {
-                controller.getSavedName();
-                // Get.to(() => const FirstScreen(), transition: Transition.leftToRight);
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Delete name') ,
-              onPressed: () {
-                controller.deleteSavedName();
-              },
-            ),
-          ],
-        )
+                ),
+              )
+            );
+          },
+        ),
     );
   }
 }
